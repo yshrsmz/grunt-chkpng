@@ -13,7 +13,7 @@ module.exports = function (grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('chkpng', 'check png image file's pallete to make sure images are color-reduced.', function () {
+  grunt.registerMultiTask('chkpng', 'check png image file\'s palette to make sure images are color-reduced.', function () {
 
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({

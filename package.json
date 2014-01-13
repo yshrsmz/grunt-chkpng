@@ -1,7 +1,7 @@
 {
   "name": "grunt-chkpng",
   "version": "0.0.1",
-  "description": "check png image file's pallete to make sure images are color-reduced.",
+  "description": "check png image file's palette to make sure images are color-reduced.",
   "homepage": "github.com/yshrsmz/grunt-chkpng",
   "repository": {
     "type": "git",

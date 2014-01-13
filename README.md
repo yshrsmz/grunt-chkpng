@@ -1,6 +1,6 @@
 # grunt-chkpng
 
-> check png image file's pallete to make sure images are color-reduced.
+> check png image file's palette to make sure images are color-reduced.
 
 ## Getting Started
 This plugin requires Grunt.
