@@ -8,15 +8,17 @@
 
 'use strict';
 
-var exec = require('child_process').exec;
-
-function execute(command, callback) {
-    exec(command, function(error, stdout, stderr) {
-        callback(stdout);
-    });
-};
-
 module.exports = function (grunt) {
+
+    var exec = require('child_process').exec,
+        PNG = require('png-js'),
+        async = require('async');
+
+    function execute(command, callback) {
+        exec(command, function(error, stdout, stderr) {
+            callback(stdout);
+        });
+    };
 
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
@@ -60,7 +62,7 @@ module.exports = function (grunt) {
     grunt.registerTask('gitchkpng', 'get png files from git commit, then check png image file\'s palette to make sure images are color-reduced.', function() {
         var options = this.options({
             punctuation: '.',
-            separator: ', '
+            separator: '\n'
         });
 
         var done = this.async();
@@ -68,8 +70,24 @@ module.exports = function (grunt) {
         execute('git diff-index HEAD --name-only', function(str){
             console.log(str);
 
-            var fileAry = str.split('\n');
-            done();
+            var pngFileAry = str.split(options.separator).filter(function(item) {
+                var fileType = item.split('.');
+                if (fileType.length) {
+                    if (fileType[fileType.length - 1].toLowerCase() === 'png') {
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+            async.each(pngFileAry, function(file, cb) {
+                PNG.decode(file, function(pixels) {
+                    cb();
+                });
+            }, function() {
+                grunt.log.writeln(JSON.stringify(pngFileAry));
+                done();
+            });
         });
     });
 };
